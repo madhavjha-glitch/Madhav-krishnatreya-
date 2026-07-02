@@ -173,10 +173,7 @@ export default function ContactForm() {
                     </div>
                   )}
 
-                  <div>
-                    <label htmlFor="contact-name" className="block text-[10px] font-mono font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-2 transition-colors duration-300">
-                      Your Name
-                    </label>
+                  <div className="relative">
                     <input
                       id="contact-name"
                       type="text"
@@ -184,15 +181,20 @@ export default function ContactForm() {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      placeholder="Jane Doe"
-                      className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:border-sky-500 focus:ring-1 focus:ring-sky-500/30 rounded-none outline-none text-slate-800 dark:text-slate-100 font-sans text-sm transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600 font-medium transition-colors duration-300"
+                      placeholder=" "
+                      className="peer w-full px-4 pt-6 pb-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:border-sky-500 focus:ring-1 focus:ring-sky-500/30 rounded-none outline-none text-slate-800 dark:text-slate-100 font-sans text-sm transition-all font-medium transition-colors duration-300"
                     />
+                    <label
+                      htmlFor="contact-name"
+                      className="absolute left-4 text-slate-400 dark:text-slate-500 transition-all duration-300 pointer-events-none origin-left text-[9px] font-mono font-bold uppercase tracking-widest top-1.5
+                      peer-placeholder-shown:text-sm peer-placeholder-shown:font-sans peer-placeholder-shown:font-medium peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-placeholder-shown:top-3.5
+                      peer-focus:top-1.5 peer-focus:text-[9px] peer-focus:font-mono peer-focus:font-bold peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-sky-500 dark:peer-focus:text-sky-400"
+                    >
+                      Your Name
+                    </label>
                   </div>
 
-                  <div>
-                    <label htmlFor="contact-email" className="block text-[10px] font-mono font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-2 transition-colors duration-300">
-                      Email Address
-                    </label>
+                  <div className="relative">
                     <input
                       id="contact-email"
                       type="email"
@@ -200,15 +202,20 @@ export default function ContactForm() {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      placeholder="jane@company.com"
-                      className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:border-sky-500 focus:ring-1 focus:ring-sky-500/30 rounded-none outline-none text-slate-800 dark:text-slate-100 font-sans text-sm transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600 font-medium transition-colors duration-300"
+                      placeholder=" "
+                      className="peer w-full px-4 pt-6 pb-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:border-sky-500 focus:ring-1 focus:ring-sky-500/30 rounded-none outline-none text-slate-800 dark:text-slate-100 font-sans text-sm transition-all font-medium transition-colors duration-300"
                     />
+                    <label
+                      htmlFor="contact-email"
+                      className="absolute left-4 text-slate-400 dark:text-slate-500 transition-all duration-300 pointer-events-none origin-left text-[9px] font-mono font-bold uppercase tracking-widest top-1.5
+                      peer-placeholder-shown:text-sm peer-placeholder-shown:font-sans peer-placeholder-shown:font-medium peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-placeholder-shown:top-3.5
+                      peer-focus:top-1.5 peer-focus:text-[9px] peer-focus:font-mono peer-focus:font-bold peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-sky-500 dark:peer-focus:text-sky-400"
+                    >
+                      Email Address
+                    </label>
                   </div>
 
-                  <div>
-                    <label htmlFor="contact-message" className="block text-[10px] font-mono font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-2 transition-colors duration-300">
-                      Message details
-                    </label>
+                  <div className="relative">
                     <textarea
                       id="contact-message"
                       name="message"
@@ -216,9 +223,17 @@ export default function ContactForm() {
                       onChange={handleChange}
                       required
                       rows={5}
-                      placeholder="Tell me about your project, query, or position..."
-                      className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:border-sky-500 focus:ring-1 focus:ring-sky-500/30 rounded-none outline-none text-slate-800 dark:text-slate-100 font-sans text-sm transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600 font-medium resize-none transition-colors duration-300"
+                      placeholder=" "
+                      className="peer w-full px-4 pt-6 pb-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:border-sky-500 focus:ring-1 focus:ring-sky-500/30 rounded-none outline-none text-slate-800 dark:text-slate-100 font-sans text-sm transition-all font-medium resize-none transition-colors duration-300"
                     />
+                    <label
+                      htmlFor="contact-message"
+                      className="absolute left-4 text-slate-400 dark:text-slate-500 transition-all duration-300 pointer-events-none origin-left text-[9px] font-mono font-bold uppercase tracking-widest top-1.5
+                      peer-placeholder-shown:text-sm peer-placeholder-shown:font-sans peer-placeholder-shown:font-medium peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-placeholder-shown:top-3.5
+                      peer-focus:top-1.5 peer-focus:text-[9px] peer-focus:font-mono peer-focus:font-bold peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-sky-500 dark:peer-focus:text-sky-400"
+                    >
+                      Message details
+                    </label>
                   </div>
 
                   <button

@@ -1,227 +1,159 @@
-import { useState, useEffect } from 'react';
-import { Menu, X, ShieldAlert, Award, FileUser, User, Mail, Sparkles, Briefcase, GraduationCap, Sun, Moon, Code } from 'lucide-react';
+import { useState } from 'react';
+import { Menu, X, Sun, Moon, Sparkles, Terminal } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface NavbarProps {
   currentView: string;
   onNavigate: (view: string) => void;
-  theme: 'light' | 'dark';
-  onToggleTheme: () => void;
+  theme?: 'light' | 'dark';
+  onToggleTheme?: () => void;
 }
 
 export default function Navbar({ currentView, onNavigate, theme, onToggleTheme }: NavbarProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const handleScrollProgress = () => {
-      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
-      if (totalScroll > 0) {
-        setScrollProgress((window.scrollY / totalScroll) * 100);
-      }
-    };
-    window.addEventListener('scroll', handleScrollProgress);
-    return () => window.removeEventListener('scroll', handleScrollProgress);
-  }, []);
-
-  const navItems = [
-    { label: 'Home', value: 'home', icon: Sparkles },
-    { label: 'About', value: 'about', icon: User },
-    { label: 'Skills', value: 'skills', icon: Award },
-    { label: 'Projects', value: 'projects', icon: Code },
-    { label: 'Experience', value: 'experience', icon: Briefcase },
-    { label: 'Education', value: 'education', icon: GraduationCap },
-    { label: 'Contact', value: 'contact', icon: Mail },
+  const navLinks = [
+    { label: 'Home', value: 'home' },
+    { label: 'About', value: 'about' },
+    { label: 'Skills', value: 'skills' },
+    { label: 'Projects', value: 'projects' },
+    { label: 'Experience', value: 'experience' },
+    { label: 'Education', value: 'education' },
+    { label: 'Contact', value: 'contact' },
   ];
 
   const handleItemClick = (value: string) => {
     onNavigate(value);
-    setIsOpen(false);
+    setIsMobileMenuOpen(false);
   };
 
-  return (
-    <nav
-      id="nav-bar"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-white/95 border-b border-slate-200 shadow-md dark:bg-slate-950/95 dark:border-slate-900 dark:shadow-xl py-3'
-          : 'bg-white/70 border-b border-slate-100 dark:bg-slate-950/70 dark:border-slate-900/40 backdrop-blur-xs py-4'
-      }`}
-    >
-      {/* Scroll Progress Bar */}
-      <div className="absolute bottom-0 left-0 h-[2.5px] bg-gradient-to-r from-accent to-accent-sec transition-all duration-75 z-10" style={{ width: `${scrollProgress}%` }} />
+  const isLight = theme === 'light';
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center">
-          {/* Logo */}
+  return (
+    <>
+      <header className="fixed top-4 inset-x-0 z-50 px-4 sm:px-6 md:px-8 max-w-7xl mx-auto pointer-events-none">
+        <div className="w-full bg-white/70 dark:bg-slate-950/75 backdrop-blur-md border border-slate-200/50 dark:border-slate-800/50 shadow-lg dark:shadow-slate-950/40 px-4 py-3 sm:px-6 sm:py-3.5 flex flex-row justify-between items-center pointer-events-auto rounded-none transition-colors duration-300">
+          
+          {/* Logo (Left side) */}
           <div 
             onClick={() => handleItemClick('home')}
-            className="flex items-center space-x-3 cursor-pointer group"
+            className="flex flex-row items-center gap-2 cursor-pointer group"
           >
-            <div className="w-10 h-10 border border-accent bg-accent/5 flex items-center justify-center text-accent font-mono font-extrabold text-lg group-hover:scale-105 transition-transform duration-300">
-              MK
+            <div className="w-8 h-8 bg-sky-500/10 dark:bg-sky-500/20 flex items-center justify-center border border-sky-500/20 group-hover:scale-105 transition-transform duration-300">
+              <Terminal className="w-4 h-4 text-sky-500" />
             </div>
-            <div>
-              <span className="text-lg font-bold text-slate-900 dark:text-slate-100 tracking-tight leading-none block mb-0.5">
-                Madhav Krishnatreya
+            <div className="flex flex-col">
+              <span className="text-sm font-black tracking-tight text-slate-900 dark:text-slate-100 uppercase">
+                Madhav.K
               </span>
-              <span className="block text-[10px] font-mono tracking-widest text-accent uppercase">
-                Full Stack Software Developer
+              <span className="text-[9px] font-mono font-bold text-sky-500 uppercase tracking-widest leading-none">
+                Dev Portfolio
               </span>
             </div>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = currentView === item.value;
+          {/* Desktop Nav Links (Center) */}
+          <nav className="hidden lg:flex flex-row items-center gap-1.5">
+            {navLinks.map((link) => {
+              const isActive = currentView === link.value;
               return (
                 <button
-                  key={item.value}
-                  onClick={() => handleItemClick(item.value)}
-                  className={`flex items-center space-x-1.5 px-3 py-2 text-xs font-mono uppercase tracking-wider transition-all duration-200 relative ${
-                    isActive
-                      ? 'text-accent bg-accent/5 border border-accent/20'
-                      : 'text-slate-600 hover:text-accent hover:bg-accent/5 dark:text-slate-400 dark:hover:text-accent dark:hover:bg-accent/5'
+                  key={link.label}
+                  onClick={() => handleItemClick(link.value)}
+                  className={`px-3 py-1.5 text-xs font-mono font-bold uppercase tracking-wider relative transition-all duration-300 cursor-pointer ${
+                    isActive 
+                      ? 'text-sky-500 dark:text-sky-400' 
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
                   }`}
                 >
-                  <Icon className="w-3.5 h-3.5 font-bold" />
-                  <span>{item.label}</span>
                   {isActive && (
-                    <motion.div
+                    <motion.span 
                       layoutId="activeNavIndicator"
-                      className="absolute bottom-0 left-3 right-3 h-[2px] bg-accent"
-                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                      className="absolute inset-0 bg-sky-500/5 dark:bg-sky-500/10 border-b-2 border-sky-500 pointer-events-none"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
                   )}
+                  {link.label}
                 </button>
               );
             })}
+          </nav>
 
-            {/* Admin/Secured Login Button */}
+          {/* Right Action buttons */}
+          <div className="flex items-center gap-3">
+            {/* Theme Toggle */}
+            {onToggleTheme && (
+              <button
+                onClick={onToggleTheme}
+                className="w-8 h-8 flex items-center justify-center text-slate-500 hover:text-slate-950 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900/50 transition-colors border border-slate-200/40 dark:border-slate-800/40 cursor-pointer"
+                title="Toggle Theme Mode"
+              >
+                {isLight ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+              </button>
+            )}
+
+            {/* Quick Contact CTA */}
             <button
-              id="admin-nav-button"
-              onClick={() => handleItemClick('admin')}
-              className={`ml-4 flex items-center space-x-1.5 px-3 py-2 text-xs font-mono font-bold uppercase tracking-wider border transition-all duration-200 ${
-                currentView === 'admin'
-                  ? 'border-emerald-500 text-emerald-600 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-950/30'
-                  : 'border-emerald-500/30 text-emerald-600/80 hover:text-emerald-600 hover:border-emerald-500 hover:bg-emerald-50 dark:text-emerald-400/80 dark:hover:text-emerald-400 dark:hover:border-emerald-500 dark:hover:bg-emerald-950/20'
-              }`}
+              onClick={() => handleItemClick('contact')}
+              className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 bg-sky-500 hover:bg-sky-600 text-slate-950 text-xs font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer"
             >
-              <ShieldAlert className="w-3.5 h-3.5" />
-              <span>Admin Panel</span>
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Contact</span>
             </button>
 
-            {/* Theme Toggle Button */}
+            {/* Hamburger button */}
             <button
-              id="theme-toggle-button"
-              onClick={onToggleTheme}
-              className="ml-2 p-2 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-accent dark:hover:text-accent bg-slate-50 dark:bg-slate-900/50 hover:bg-accent/5 transition-all duration-200 cursor-pointer"
-              title={theme === 'dark' ? 'Switch to Light Theme' : 'Switch to Geometric Dark Theme'}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden w-8 h-8 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900/50 border border-slate-200/40 dark:border-slate-800/40 cursor-pointer"
+              aria-label="Toggle menu"
             >
-              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400 animate-spin-slow" /> : <Moon className="w-4 h-4 text-accent" />}
-            </button>
-          </div>
-
-          {/* Mobile menu and theme buttons */}
-          <div className="md:hidden flex items-center space-x-2">
-            {/* Mobile quick theme toggle */}
-            <button
-              id="mobile-quick-theme-toggle"
-              onClick={onToggleTheme}
-              className="p-2 text-slate-600 dark:text-slate-400 hover:text-accent dark:hover:text-accent bg-slate-100 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 cursor-pointer"
-            >
-              {theme === 'dark' ? <Sun className="w-5 h-5 text-amber-400 animate-spin-slow" /> : <Moon className="w-5 h-5 text-accent" />}
-            </button>
-
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="p-2 text-slate-600 dark:text-slate-400 hover:text-accent dark:hover:text-accent hover:bg-slate-50 dark:hover:bg-slate-900/50 focus:outline-none border border-transparent hover:border-slate-200 dark:hover:border-slate-800"
-            >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </button>
           </div>
         </div>
-      </div>
+      </header>
 
-      {/* Mobile Menu */}
+      {/* Full screen Mobile Navigation Drawer */}
       <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-t border-slate-200 dark:bg-slate-950 dark:border-slate-900 overflow-hidden shadow-2xl"
+        {isMobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-40 bg-white dark:bg-slate-950/98 backdrop-blur-md lg:hidden flex flex-col items-center justify-center px-6 transition-colors duration-300"
           >
-            <div className="px-4 pt-2 pb-4 space-y-1">
-              {navItems.map((item) => {
-                const Icon = item.icon;
-                const isActive = currentView === item.value;
+            <div className="flex flex-col items-center gap-5 w-full max-w-sm">
+              <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-2">
+                // Navigation Menu
+              </span>
+              {navLinks.map((link) => {
+                const isActive = currentView === link.value;
                 return (
                   <button
-                    key={item.value}
-                    onClick={() => handleItemClick(item.value)}
-                    className={`flex items-center space-x-3 w-full px-4 py-3 text-sm font-mono uppercase tracking-wider transition-colors ${
-                      isActive
-                        ? 'text-accent bg-accent/5 border border-accent/20'
-                        : 'text-slate-600 hover:text-accent hover:bg-accent/5 dark:text-slate-400 dark:hover:text-accent dark:hover:bg-accent/5'
+                    key={link.label}
+                    onClick={() => handleItemClick(link.value)}
+                    className={`w-full py-2.5 text-center text-lg font-bold font-sans uppercase tracking-wide border-b border-slate-100 dark:border-slate-900 cursor-pointer ${
+                      isActive 
+                        ? 'text-sky-500 dark:text-sky-400' 
+                        : 'text-slate-700 dark:text-slate-300 hover:text-sky-500'
                     }`}
                   >
-                    <Icon className="w-4 h-4 text-slate-400 dark:text-slate-500" />
-                    <span>{item.label}</span>
+                    {link.label}
                   </button>
                 );
               })}
-
-              <div className="pt-2 border-t border-slate-200 dark:border-slate-900">
-                <button
-                  onClick={() => handleItemClick('admin')}
-                  className={`flex items-center space-x-3 w-full px-4 py-3 text-sm font-mono uppercase tracking-wider border ${
-                    currentView === 'admin'
-                      ? 'border-emerald-500 text-emerald-600 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-950/20'
-                      : 'border-emerald-500/30 text-emerald-600/80 hover:text-emerald-600 hover:bg-emerald-50 dark:border-emerald-500/30 dark:text-emerald-400/80 dark:hover:bg-emerald-950/10'
-                  }`}
-                >
-                  <ShieldAlert className="w-4 h-4 text-emerald-500" />
-                  <span>Admin Panel</span>
-                </button>
-              </div>
-
-              {/* Theme state switcher inside drawer */}
-              <div className="pt-2 border-t border-slate-200 dark:border-slate-900 flex justify-between items-center px-4 py-3">
-                <span className="text-sm font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold">Theme</span>
-                <button
-                  id="mobile-drawer-theme-toggle"
-                  onClick={onToggleTheme}
-                  className="flex items-center space-x-2 px-4 py-2 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-accent dark:hover:text-accent bg-slate-50 dark:bg-slate-900/50 rounded-xl font-mono text-xs uppercase tracking-wider cursor-pointer"
-                >
-                  {theme === 'dark' ? (
-                    <>
-                      <Sun className="w-4 h-4 text-amber-500 animate-spin-slow" />
-                      <span>Light</span>
-                    </>
-                  ) : (
-                    <>
-                      <Moon className="w-4 h-4 text-accent" />
-                      <span>Dark</span>
-                    </>
-                  )}
-                </button>
-              </div>
+              
+              <button
+                onClick={() => handleItemClick('contact')}
+                className="w-full mt-4 py-3 bg-sky-500 text-slate-950 text-sm font-mono font-bold uppercase tracking-widest hover:bg-sky-600 cursor-pointer"
+              >
+                Get in touch
+              </button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </>
   );
 }

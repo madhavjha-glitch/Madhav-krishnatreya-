@@ -7,7 +7,7 @@ export default function Experience() {
     {
       role: "Digital Marketing Intern",
       company: "Agski 360",
-      duration: "Internship Term",
+      duration: "Completed",
       highlights: [
         "Assisted in planning and executing high-impact digital marketing campaigns across key social media platforms.",
         "Supported creative content creation, detailed audience research, and multi-channel performance tracking of marketing activities.",
@@ -67,9 +67,9 @@ export default function Experience() {
                           <p className="text-sky-600 dark:text-sky-400 font-mono text-xs uppercase tracking-widest mt-1 transition-colors duration-300">{exp.company}</p>
                         </div>
                       </div>
-                      <div className="inline-flex items-center space-x-1.5 px-4 py-1.5 border border-emerald-500/30 bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 text-xs font-mono font-bold uppercase tracking-widest">
+                      <div className="inline-flex items-center space-x-1.5 px-4 py-1.5 border border-emerald-500/30 bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 text-xs font-mono font-bold uppercase tracking-widest">
                         <Calendar className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                        <span>Active Internship</span>
+                        <span>Internship Completed</span>
                       </div>
                     </div>
 

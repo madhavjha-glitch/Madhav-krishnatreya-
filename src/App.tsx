@@ -215,7 +215,23 @@ export default function App() {
             <span id="footer-connect-title" className="text-xs font-mono font-bold tracking-widest uppercase text-slate-500">
               // CONNECT / REACH OUT
             </span>
-            <div id="footer-social-icons-container" className="flex items-center gap-3">
+            <motion.div
+              id="footer-social-icons-container"
+              className="flex items-center gap-3"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.12,
+                    delayChildren: 0.1
+                  }
+                }
+              }}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.1 }}
+            >
               {[
                 { name: 'LinkedIn', icon: Linkedin, url: 'https://linkedin.com/in/madhav-jha-bba', color: 'hover:text-blue-400 hover:border-blue-500/50 hover:bg-blue-950/20' },
                 { name: 'GitHub', icon: Github, url: 'https://github.com/madhavjha514', color: 'hover:text-slate-100 hover:border-slate-500/50 hover:bg-slate-900/40' },
@@ -225,12 +241,25 @@ export default function App() {
               ].map((link) => {
                 const Icon = link.icon;
                 return (
-                  <a
+                  <motion.a
                     id={`footer-social-${link.name.toLowerCase()}`}
                     key={link.name}
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    variants={{
+                      hidden: { opacity: 0, scale: 0.3, y: 20 },
+                      visible: { 
+                        opacity: 1, 
+                        scale: 1, 
+                        y: 0,
+                        transition: {
+                          type: "spring",
+                          stiffness: 260,
+                          damping: 18
+                        }
+                      }
+                    }}
                     className={`w-10 h-10 border border-slate-800 bg-slate-950/40 text-slate-400 flex items-center justify-center transition-all duration-300 relative group cursor-pointer ${link.color} hover:scale-110 hover:-translate-y-0.5 hover:shadow-lg`}
                     title={`Connect on ${link.name}`}
                   >
@@ -240,10 +269,10 @@ export default function App() {
                     <span className="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-slate-800 group-hover:border-sky-500 transition-colors" />
                     
                     <Icon className="w-4 h-4 transition-transform duration-300 group-hover:rotate-6" />
-                  </a>
+                  </motion.a>
                 );
               })}
-            </div>
+            </motion.div>
           </div>
 
           <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
