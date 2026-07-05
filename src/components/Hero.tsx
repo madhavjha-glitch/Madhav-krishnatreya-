@@ -15,6 +15,30 @@ export default function Hero({ onNavigate }: HeroProps) {
     { label: 'Synergy Catalyst', value: 'Tech + Marketing', detail: 'Automated Lead Gen Systems' },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.05,
+      },
+    },
+  };
+
+  const childVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: 'spring',
+        stiffness: 100,
+        damping: 15,
+      },
+    },
+  };
+
   return (
     <section 
       id="home" 
@@ -27,12 +51,15 @@ export default function Hero({ onNavigate }: HeroProps) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           
           {/* Main Info Block */}
-          <div className="lg:col-span-7 space-y-8 text-center lg:text-left">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="lg:col-span-7 space-y-8 text-center lg:text-left"
+          >
             {/* Tagline / Welcome Badge */}
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              variants={childVariants}
               className="inline-flex items-center space-x-2 px-3 py-1 border border-sky-200 dark:border-sky-500/30 bg-sky-50/50 dark:bg-sky-950/20 rounded-none"
             >
               <Sparkles className="w-3.5 h-3.5 text-sky-500 animate-pulse" />
@@ -44,18 +71,14 @@ export default function Hero({ onNavigate }: HeroProps) {
             {/* Display Headline */}
             <div className="space-y-3">
               <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.1 }}
+                variants={childVariants}
                 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.1] font-sans"
               >
                 Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-indigo-500 dark:from-sky-400 dark:to-indigo-400">Madhav Krishnatreya</span>
               </motion.h1>
               
               <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.2 }}
+                variants={childVariants}
                 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-600 dark:text-slate-400 font-sans uppercase tracking-wider"
               >
                 Full Stack Developer & Digital Marketer
@@ -64,9 +87,7 @@ export default function Hero({ onNavigate }: HeroProps) {
 
             {/* Bio Copy */}
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.3 }}
+              variants={childVariants}
               className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-sans"
             >
               I bridge the gap between technical engineering and strategic business growth. From building complex React components and robust Express backends to creating smart lead generation funnels, automated spreadsheets, and high-impact search strategy.
@@ -74,9 +95,7 @@ export default function Hero({ onNavigate }: HeroProps) {
 
             {/* Action Buttons */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.4 }}
+              variants={childVariants}
               className="flex flex-wrap gap-4 items-center justify-center lg:justify-start"
             >
               <button
@@ -97,9 +116,7 @@ export default function Hero({ onNavigate }: HeroProps) {
 
             {/* Micro Badges */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
+              variants={childVariants}
               className="flex flex-wrap gap-2 justify-center lg:justify-start pt-4 text-xs font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500"
             >
               <span>TypeScript</span>
@@ -112,13 +129,13 @@ export default function Hero({ onNavigate }: HeroProps) {
               <span>•</span>
               <span>Lead Generation</span>
             </motion.div>
-          </div>
+          </motion.div>
 
           {/* Interactive Profile Card Block */}
           <div className="lg:col-span-5 flex justify-center">
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, scale: 0.95, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96"
             >
@@ -157,13 +174,17 @@ export default function Hero({ onNavigate }: HeroProps) {
 
         {/* Minimalist Stats Grid Section */}
         <div className="mt-20 md:mt-24 pt-12 border-t border-slate-200 dark:border-slate-900">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.15 }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          >
             {quickStats.map((stat, idx) => (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 + idx * 0.1 }}
+                variants={childVariants}
                 className="p-6 bg-slate-50/50 dark:bg-slate-900/10 border border-slate-200/50 dark:border-slate-800/30 hover:border-sky-500/30 transition-all duration-300"
               >
                 <p className="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5">
@@ -177,7 +198,7 @@ export default function Hero({ onNavigate }: HeroProps) {
                 </p>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
 
       </div>

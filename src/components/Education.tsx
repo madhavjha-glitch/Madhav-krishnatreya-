@@ -42,6 +42,30 @@ export default function Education() {
     }
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.12,
+        delayChildren: 0.05,
+      },
+    },
+  };
+
+  const childVariants = {
+    hidden: { opacity: 0, y: 35 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: 'spring',
+        stiffness: 90,
+        damping: 14,
+      },
+    },
+  };
+
   return (
     <section id="education" className="py-20 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-900 bg-grid-pattern transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -68,7 +92,13 @@ export default function Education() {
         </div>
 
         {/* Education Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch"
+        >
           {educationList.map((edu, idx) => {
             const Icon = edu.icon;
             const glowColor = edu.isCurrent ? 'rgba(14, 165, 233, 0.15)' : 'rgba(148, 163, 184, 0.1)';
@@ -76,10 +106,7 @@ export default function Education() {
             return (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
+                variants={childVariants}
                 className="w-full h-full"
               >
                 <ThreeDCard glowColor={glowColor} className="w-full h-full">
@@ -151,7 +178,7 @@ export default function Education() {
               </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

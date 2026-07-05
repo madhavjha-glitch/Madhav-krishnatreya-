@@ -101,6 +101,30 @@ export default function Skills() {
     ? skills 
     : skills.filter(s => s.category === activeCategory);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+        delayChildren: 0.05,
+      },
+    },
+  };
+
+  const childVariants = {
+    hidden: { opacity: 0, y: 35 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: 'spring',
+        stiffness: 90,
+        damping: 14,
+      },
+    },
+  };
+
   return (
     <section id="skills" className="py-20 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-900 bg-grid-pattern transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -144,7 +168,13 @@ export default function Skills() {
         </div>
 
         {/* Skills Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.05 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
           {filteredSkills.map((skill, idx) => {
             const Icon = skill.icon;
             
@@ -161,10 +191,7 @@ export default function Skills() {
               <motion.div
                 key={skill.name}
                 layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3 }}
+                variants={childVariants}
                 className="w-full h-full"
               >
                 <ThreeDCard glowColor={glowColor} className="w-full h-full">
@@ -223,7 +250,7 @@ export default function Skills() {
               </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

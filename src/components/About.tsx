@@ -16,6 +16,30 @@ export default function About() {
     window.print();
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const childVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: 'spring',
+        stiffness: 90,
+        damping: 14,
+      },
+    },
+  };
+
   return (
     <section id="about" className="py-20 bg-slate-50 border-b border-slate-200 dark:bg-slate-900 dark:border-slate-950 bg-dot-pattern transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -41,12 +65,16 @@ export default function About() {
           <div className="w-16 h-[2px] bg-sky-500 mx-auto mt-4" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start"
+        >
           {/* Objective Statement Card */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            variants={childVariants}
             className="lg:col-span-7"
           >
             <ThreeDCard glowColor="rgba(14, 165, 233, 0.12)">
@@ -115,9 +143,7 @@ export default function About() {
 
           {/* Personal Details Table Card */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            variants={childVariants}
             className="lg:col-span-5"
           >
             <ThreeDCard glowColor="rgba(16, 185, 129, 0.12)">
@@ -127,11 +153,18 @@ export default function About() {
                   <span className="text-slate-900 dark:text-slate-100 transition-colors duration-300">Personal Credentials</span>
                 </h3>
 
-                <div className="space-y-6">
+                <motion.div 
+                  variants={containerVariants}
+                  className="space-y-6"
+                >
                   {personalInfo.map((info, idx) => {
                     const Icon = info.icon;
                     return (
-                      <div key={idx} className="flex items-center space-x-4 pb-4 border-b border-slate-100 dark:border-slate-800/60 last:border-0 last:pb-0 transition-colors duration-300">
+                      <motion.div 
+                        key={idx} 
+                        variants={childVariants}
+                        className="flex items-center space-x-4 pb-4 border-b border-slate-100 dark:border-slate-800/60 last:border-0 last:pb-0 transition-colors duration-300"
+                      >
                         <div className="w-9 h-9 border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40 flex items-center justify-center shrink-0 rounded-none text-emerald-600 dark:text-emerald-400 transition-colors duration-300">
                           <Icon className="w-4 h-4" />
                         </div>
@@ -139,14 +172,14 @@ export default function About() {
                           <p className="text-[10px] font-mono text-slate-400 dark:text-slate-500 uppercase tracking-widest transition-colors duration-300">{info.label}</p>
                           <p className="text-base font-bold text-slate-800 dark:text-slate-200 transition-colors duration-300">{info.value}</p>
                         </div>
-                      </div>
+                      </motion.div>
                     );
                   })}
-                </div>
+                </motion.div>
               </div>
             </ThreeDCard>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

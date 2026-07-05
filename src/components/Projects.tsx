@@ -50,6 +50,37 @@ export default function Projects() {
     return matchesCategory && matchesSearch;
   });
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+        delayChildren: 0.05,
+      },
+    },
+  };
+
+  const childVariants = {
+    hidden: { opacity: 0, y: 35, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        type: 'spring',
+        stiffness: 90,
+        damping: 14,
+      },
+    },
+    exit: {
+      opacity: 0,
+      scale: 0.9,
+      y: 15,
+      transition: { duration: 0.2 }
+    }
+  };
+
   return (
     <section id="projects" className="py-24 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-900 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -142,6 +173,10 @@ export default function Projects() {
         ) : (
           <motion.div 
             layout
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.05 }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
             <AnimatePresence mode="popLayout">
@@ -158,10 +193,7 @@ export default function Projects() {
                   <motion.div
                     key={project.id}
                     layout
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.3 }}
+                    variants={childVariants}
                     className="w-full h-full"
                   >
                     <ThreeDCard glowColor={glowColor} className="w-full h-full">

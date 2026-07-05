@@ -10,7 +10,9 @@ import Experience from './components/Experience';
 import Education from './components/Education';
 import ContactForm from './components/ContactForm';
 import AdminPanel from './components/AdminPanel';
-import ThemeCustomizer, { BaseTheme, AccentColor, CanvasPattern } from './components/ThemeCustomizer';
+export type BaseTheme = 'slate-dark' | 'onyx-dark' | 'alabaster-light' | 'theme-4d' | 'theme-midnight' | 'theme-sunset' | 'theme-pearlescent';
+export type AccentColor = 'sky' | 'emerald' | 'amber' | 'violet';
+export type CanvasPattern = 'grid' | 'dots' | 'plain';
 
 export default function App() {
   const [currentView, setCurrentView] = useState<string>('home');
@@ -18,23 +20,23 @@ export default function App() {
   // Premium Customizer states
   const [baseTheme, setBaseTheme] = useState<BaseTheme>(() => {
     const saved = localStorage.getItem('baseTheme');
-    return (saved === 'slate-dark' || saved === 'onyx-dark' || saved === 'alabaster-light') 
+    return (saved === 'slate-dark' || saved === 'onyx-dark' || saved === 'alabaster-light' || saved === 'theme-4d' || saved === 'theme-midnight' || saved === 'theme-sunset' || saved === 'theme-pearlescent') 
       ? (saved as BaseTheme) 
-      : 'slate-dark';
+      : 'theme-4d';
   });
 
   const [accent, setAccent] = useState<AccentColor>(() => {
     const saved = localStorage.getItem('accentColor');
     return (saved === 'sky' || saved === 'emerald' || saved === 'amber' || saved === 'violet')
       ? (saved as AccentColor)
-      : 'sky';
+      : 'violet'; // violet is a perfect vibe for the 4D aesthetic!
   });
 
   const [canvas, setCanvas] = useState<CanvasPattern>(() => {
     const saved = localStorage.getItem('canvasPattern');
     return (saved === 'grid' || saved === 'dots' || saved === 'plain')
       ? (saved as CanvasPattern)
-      : 'dots';
+      : 'grid'; // Grid looks very futuristic and high-end tech-luxe!
   });
 
   const [interactiveAura, setInteractiveAura] = useState<boolean>(() => {
@@ -47,7 +49,7 @@ export default function App() {
   // Synchronize layout theme mode
   useEffect(() => {
     const root = document.documentElement;
-    root.classList.remove('dark');
+    root.classList.remove('dark', 'theme-4d', 'theme-midnight', 'theme-sunset', 'theme-pearlescent');
     
     if (baseTheme === 'onyx-dark') {
       root.classList.add('dark');
@@ -56,6 +58,22 @@ export default function App() {
     } else if (baseTheme === 'alabaster-light') {
       root.style.setProperty('--scrollbar-track-bg', '#fafaf9');
       root.style.setProperty('--scrollbar-thumb-bg', '#e7e5e4');
+    } else if (baseTheme === 'theme-4d') {
+      root.classList.add('dark', 'theme-4d');
+      root.style.setProperty('--scrollbar-track-bg', '#030206');
+      root.style.setProperty('--scrollbar-thumb-bg', '#151221');
+    } else if (baseTheme === 'theme-midnight') {
+      root.classList.add('dark', 'theme-midnight');
+      root.style.setProperty('--scrollbar-track-bg', '#020215');
+      root.style.setProperty('--scrollbar-thumb-bg', '#0f0f35');
+    } else if (baseTheme === 'theme-sunset') {
+      root.classList.add('dark', 'theme-sunset');
+      root.style.setProperty('--scrollbar-track-bg', '#0a040b');
+      root.style.setProperty('--scrollbar-thumb-bg', '#220b1e');
+    } else if (baseTheme === 'theme-pearlescent') {
+      root.classList.add('theme-pearlescent');
+      root.style.setProperty('--scrollbar-track-bg', '#faf9ff');
+      root.style.setProperty('--scrollbar-thumb-bg', '#e5e1f7');
     } else {
       root.classList.add('dark');
       root.style.setProperty('--scrollbar-track-bg', '#020617');
@@ -108,12 +126,21 @@ export default function App() {
   }, [interactiveAura]);
 
   const toggleTheme = () => {
-    setBaseTheme(prev => prev === 'alabaster-light' ? 'slate-dark' : 'alabaster-light');
+    const themes: BaseTheme[] = ['theme-4d', 'theme-midnight', 'theme-sunset', 'theme-pearlescent', 'slate-dark', 'onyx-dark', 'alabaster-light'];
+    setBaseTheme(prev => {
+      const idx = themes.indexOf(prev);
+      const nextIdx = (idx + 1) % themes.length;
+      return themes[nextIdx];
+    });
   };
 
   const getThemeClass = () => {
     if (baseTheme === 'onyx-dark') return 'dark bg-black text-zinc-100';
     if (baseTheme === 'alabaster-light') return 'bg-stone-50 text-stone-800';
+    if (baseTheme === 'theme-4d') return 'dark theme-4d bg-[#030206] text-slate-100';
+    if (baseTheme === 'theme-midnight') return 'dark theme-midnight bg-[#020215] text-slate-100';
+    if (baseTheme === 'theme-sunset') return 'dark theme-sunset bg-[#0a040b] text-rose-50';
+    if (baseTheme === 'theme-pearlescent') return 'theme-pearlescent bg-[#faf9ff] text-slate-800';
     return 'dark bg-slate-950 text-slate-100';
   };
 
@@ -134,6 +161,60 @@ export default function App() {
 
   return (
     <div className={`min-h-screen flex flex-col antialiased font-sans transition-colors duration-300 relative overflow-hidden ${getThemeClass()}`}>
+      {/* Dynamic Animated Mesh Gradient Background & Color Grading */}
+      {['theme-4d', 'theme-midnight', 'theme-sunset', 'theme-pearlescent'].includes(baseTheme) && (
+        <div className={`fixed inset-0 z-0 pointer-events-none overflow-hidden transition-colors duration-500 ${
+          baseTheme === 'theme-4d' ? 'bg-[#030206]' :
+          baseTheme === 'theme-midnight' ? 'bg-[#020215]' :
+          baseTheme === 'theme-sunset' ? 'bg-[#0a040b]' :
+          'bg-[#faf9ff]'
+        }`}>
+          {/* Animated Mesh Orbs for "Vibe" Color Grading */}
+          <div className={`absolute top-[-15%] left-[-15%] w-[65%] h-[65%] rounded-full blur-[120px] animate-mesh-orb-1 ${
+            baseTheme === 'theme-4d' ? 'bg-gradient-to-br from-indigo-500/15 via-violet-500/10 to-transparent' :
+            baseTheme === 'theme-midnight' ? 'bg-gradient-to-br from-blue-600/20 via-indigo-600/15 to-transparent' :
+            baseTheme === 'theme-sunset' ? 'bg-gradient-to-br from-rose-600/20 via-red-500/15 to-transparent' :
+            'bg-gradient-to-br from-pink-400/10 via-sky-300/5 to-transparent'
+          }`} />
+          <div className={`absolute bottom-[-15%] right-[-15%] w-[65%] h-[65%] rounded-full blur-[120px] animate-mesh-orb-2 ${
+            baseTheme === 'theme-4d' ? 'bg-gradient-to-tr from-cyan-500/15 via-pink-500/10 to-transparent' :
+            baseTheme === 'theme-midnight' ? 'bg-gradient-to-tr from-violet-600/20 via-purple-700/10 to-transparent' :
+            baseTheme === 'theme-sunset' ? 'bg-gradient-to-tr from-amber-500/20 via-orange-600/15 to-transparent' :
+            'bg-gradient-to-tr from-purple-300/12 via-amber-200/5 to-transparent'
+          }`} />
+          <div className={`absolute top-[30%] right-[10%] w-[55%] h-[55%] rounded-full blur-[130px] animate-mesh-orb-3 ${
+            baseTheme === 'theme-4d' ? 'bg-gradient-to-bl from-purple-600/15 via-emerald-500/5 to-transparent' :
+            baseTheme === 'theme-midnight' ? 'bg-gradient-to-bl from-cyan-500/15 via-blue-500/5 to-transparent' :
+            baseTheme === 'theme-sunset' ? 'bg-gradient-to-bl from-violet-600/18 via-pink-500/8 to-transparent' :
+            'bg-gradient-to-bl from-blue-300/10 via-teal-200/5 to-transparent'
+          }`} />
+          <div className={`absolute bottom-[20%] left-[10%] w-[50%] h-[50%] rounded-full blur-[100px] animate-mesh-orb-4 ${
+            baseTheme === 'theme-4d' ? 'bg-gradient-to-tr from-amber-500/8 via-rose-500/5 to-transparent' :
+            baseTheme === 'theme-midnight' ? 'bg-gradient-to-tr from-indigo-400/10 via-slate-600/5 to-transparent' :
+            baseTheme === 'theme-sunset' ? 'bg-gradient-to-tr from-purple-500/10 via-amber-600/5 to-transparent' :
+            'bg-gradient-to-tr from-rose-300/8 via-violet-200/5 to-transparent'
+          }`} />
+          
+          {/* High-fidelity film grain & cinematic noise shader */}
+          <div className={`absolute inset-0 mix-blend-overlay pointer-events-none transition-opacity duration-500 ${
+            baseTheme === 'theme-4d' ? 'opacity-[0.035]' :
+            baseTheme === 'theme-midnight' ? 'opacity-[0.03]' :
+            baseTheme === 'theme-sunset' ? 'opacity-[0.04]' :
+            'opacity-[0.015]'
+          }`} style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }} />
+          
+          {/* Vignette & Contrast Overlay */}
+          <div className="absolute inset-0 transition-all duration-500" style={{
+            background: `radial-gradient(circle at 50% 50%, transparent 20%, ${
+              baseTheme === 'theme-4d' ? '#030206' :
+              baseTheme === 'theme-midnight' ? '#020215' :
+              baseTheme === 'theme-sunset' ? '#0a040b' :
+              '#faf9ff'
+            } 90%)`
+          }} />
+        </div>
+      )}
+
       {/* Global Interactive mouse spotlight tracking aura */}
       {interactiveAura && (
         <div
@@ -143,18 +224,6 @@ export default function App() {
           }}
         />
       )}
-
-      {/* Theme customization panel */}
-      <ThemeCustomizer
-        baseTheme={baseTheme}
-        setBaseTheme={setBaseTheme}
-        accent={accent}
-        setAccent={setAccent}
-        canvas={canvas}
-        setCanvas={setCanvas}
-        interactiveAura={interactiveAura}
-        setInteractiveAura={setInteractiveAura}
-      />
 
       {/* Floating Header Navigation */}
       <Navbar currentView={currentView} onNavigate={handleNavigate} theme={baseTheme === 'alabaster-light' ? 'light' : 'dark'} onToggleTheme={toggleTheme} />

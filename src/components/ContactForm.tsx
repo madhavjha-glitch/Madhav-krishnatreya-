@@ -39,6 +39,30 @@ export default function ContactForm() {
     }
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const childVariants = {
+    hidden: { opacity: 0, y: 35 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: 'spring',
+        stiffness: 90,
+        damping: 14,
+      },
+    },
+  };
+
   return (
     <section id="contact" className="py-20 bg-slate-50 border-b border-slate-200 dark:bg-slate-900 dark:border-slate-950 bg-dot-pattern transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -64,12 +88,16 @@ export default function ContactForm() {
           <div className="w-16 h-[2px] bg-sky-500 mx-auto mt-4" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-5xl mx-auto items-stretch">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-5xl mx-auto items-stretch"
+        >
           {/* Contact Details Pane */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            variants={childVariants}
             className="lg:col-span-5"
           >
             <ThreeDCard glowColor="rgba(14, 165, 233, 0.12)" className="w-full h-full">
@@ -137,9 +165,7 @@ export default function ContactForm() {
 
           {/* Form Pane */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            variants={childVariants}
             className="lg:col-span-7"
           >
             <ThreeDCard glowColor="rgba(16, 185, 129, 0.12)" className="w-full h-full">
@@ -257,7 +283,7 @@ export default function ContactForm() {
               </div>
             </ThreeDCard>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

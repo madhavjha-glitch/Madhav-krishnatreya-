@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Settings, Eye, Grid, Sparkles, Check, Moon, Sun, MonitorDot, HelpCircle } from 'lucide-react';
+import { Settings, Eye, Grid, Sparkles, Check, Moon, Sun, MonitorDot, HelpCircle, Compass, Flame, Palette } from 'lucide-react';
 
-export type BaseTheme = 'slate-dark' | 'onyx-dark' | 'alabaster-light';
+export type BaseTheme = 'slate-dark' | 'onyx-dark' | 'alabaster-light' | 'theme-4d' | 'theme-midnight' | 'theme-sunset' | 'theme-pearlescent';
 export type AccentColor = 'sky' | 'emerald' | 'amber' | 'violet';
 export type CanvasPattern = 'grid' | 'dots' | 'plain';
 
@@ -39,7 +39,11 @@ export default function ThemeCustomizer({
   const baseThemes = [
     { id: 'slate-dark' as BaseTheme, name: 'Slate Space', desc: 'Modern steel dark mode', icon: Moon },
     { id: 'onyx-dark' as BaseTheme, name: 'OLED Onyx', desc: 'Ultra-contrast pitch black', icon: MonitorDot },
-    { id: 'alabaster-light' as BaseTheme, name: 'Alabaster Chalk', desc: 'Warm minimalist light', icon: Sun }
+    { id: 'alabaster-light' as BaseTheme, name: 'Alabaster Chalk', desc: 'Warm minimalist light', icon: Sun },
+    { id: 'theme-4d' as BaseTheme, name: '4D Hyper-Glow', desc: 'Spatio-temporal fluid color grading', icon: Sparkles },
+    { id: 'theme-midnight' as BaseTheme, name: 'Midnight Sapphire', desc: 'Deep cosmos cobalt space', icon: Compass },
+    { id: 'theme-sunset' as BaseTheme, name: 'Sunset Crimson', desc: 'Volcanic magma & deep violet', icon: Flame },
+    { id: 'theme-pearlescent' as BaseTheme, name: 'Pearlescent Aurora', desc: 'Prismatic soft velvet light', icon: Palette }
   ];
 
   const canvasPatterns = [
