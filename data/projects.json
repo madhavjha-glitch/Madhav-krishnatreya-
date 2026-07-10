@@ -1,0 +1,72 @@
+[
+  {
+    "id": "proj_4",
+    "title": "Blue Star Pest Control",
+    "description": "An interactive web platform built for professional pest control services. Features a real-time service cost estimator, coverage maps, dynamic pest identification reference cards, and an automated booking inquiry pipeline.",
+    "techStack": [
+      "React",
+      "Vite",
+      "Tailwind CSS",
+      "Framer Motion",
+      "Lucide Icons"
+    ],
+    "githubUrl": "https://github.com/madhavjha514/blue-star-pest-control",
+    "liveUrl": "https://blue-star-pest-control.vercel.app",
+    "category": "frontend",
+    "featured": true,
+    "date": "2026-07-10T07:25:00.000Z"
+  },
+  {
+    "id": "proj_1",
+    "title": "CloudEngine Orchestrator",
+    "description": "An asynchronous distributed task orchestration engine. Handles background jobs, multi-stage retry queues, latency logging, and real-time visualization dashboards via WebSocket sync.",
+    "techStack": [
+      "TypeScript",
+      "Node.js",
+      "Express",
+      "Redis",
+      "Docker",
+      "Tailwind CSS"
+    ],
+    "githubUrl": "https://github.com/madhavjha514/cloudengine-orchestrator",
+    "liveUrl": "https://example.com/cloudengine",
+    "category": "backend",
+    "featured": true,
+    "date": "2026-07-10T06:56:17.122Z"
+  },
+  {
+    "id": "proj_2",
+    "title": "ApexMetrics Web Dashboard",
+    "description": "High-performance full-stack system analytics dashboard. Integrates real-time Prometheus, PostgreSQL, and MongoDB query telemetry with responsive client charting.",
+    "techStack": [
+      "React",
+      "Vite",
+      "D3.js",
+      "MongoDB",
+      "Express",
+      "Tailwind CSS"
+    ],
+    "githubUrl": "https://github.com/madhavjha514/apexmetrics-dashboard",
+    "liveUrl": "https://example.com/apexmetrics",
+    "category": "fullstack",
+    "featured": true,
+    "date": "2026-07-10T06:56:17.122Z"
+  },
+  {
+    "id": "proj_3",
+    "title": "ZeroTrust Token Security Proxy",
+    "description": "A secure authorization proxy gateway. Implements cryptographic token-rotation, secure session headers, client rate-limiting, and detailed IP auditing logs.",
+    "techStack": [
+      "Node.js",
+      "TypeScript",
+      "JSON Web Tokens",
+      "Cryptography",
+      "Express"
+    ],
+    "githubUrl": "https://github.com/madhavjha514/zerotrust-auth-proxy",
+    "liveUrl": "",
+    "category": "devops",
+    "featured": false,
+    "date": "2026-07-10T06:56:17.122Z"
+  }
+]

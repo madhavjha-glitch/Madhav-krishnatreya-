@@ -1,40 +1,35 @@
-import React, { useRef, useState } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
+import React, { useState, useRef } from 'react';
 
 interface ThreeDCardProps {
   children: React.ReactNode;
   className?: string;
-  glowColor?: string; // e.g. "rgba(14, 165, 233, 0.15)"
+  glowColor?: string;
 }
 
-export default function ThreeDCard({ children, className = '', glowColor = 'rgba(14, 165, 233, 0.15)' }: ThreeDCardProps) {
+export default function ThreeDCard({ children, className = '', glowColor = 'rgba(168, 85, 247, 0.22)' }: ThreeDCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
+  const [coords, setCoords] = useState({ rotateX: 0, rotateY: 0, shineX: 50, shineY: 50 });
   const [isHovered, setIsHovered] = useState(false);
 
-  // Mouse coordinates as motion values (normalized from -0.5 to 0.5)
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  // Interactive springs for fluid, premium 3D tilt reaction
-  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [8, -8]), { damping: 25, stiffness: 120 });
-  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-8, 8]), { damping: 25, stiffness: 120 });
-
-  // Handle dynamic Mouse Move inside the container
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-
-    const mouseX = (e.clientX - rect.left) / width - 0.5;
-    const mouseY = (e.clientY - rect.top) / height - 0.5;
-
-    x.set(mouseX);
-    y.set(mouseY);
-
-    // Set custom CSS properties for live spotlight tracker highlight
-    cardRef.current.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-    cardRef.current.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+    const card = cardRef.current;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const xc = rect.width / 2;
+    const yc = rect.height / 2;
+    
+    // Max rotation of 12 degrees for an extra polished 3D feel
+    const maxRotate = 12;
+    const rotateY = ((x - xc) / xc) * maxRotate;
+    const rotateX = -((y - yc) / yc) * maxRotate;
+    
+    const shineX = (x / rect.width) * 100;
+    const shineY = (y / rect.height) * 100;
+    
+    setCoords({ rotateX, rotateY, shineX, shineY });
   };
 
   const handleMouseEnter = () => {
@@ -43,9 +38,12 @@ export default function ThreeDCard({ children, className = '', glowColor = 'rgba
 
   const handleMouseLeave = () => {
     setIsHovered(false);
-    x.set(0);
-    y.set(0);
+    setCoords({ rotateX: 0, rotateY: 0, shineX: 50, shineY: 50 });
   };
+
+  const transformStyle = isHovered
+    ? `perspective(1000px) rotateX(${coords.rotateX}deg) rotateY(${coords.rotateY}deg) scale3d(1.04, 1.04, 1.04)`
+    : 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
 
   return (
     <div
@@ -53,53 +51,43 @@ export default function ThreeDCard({ children, className = '', glowColor = 'rgba
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`relative select-none group transition-shadow duration-500 ${className}`}
-      style={{ 
-        perspective: '1200px',
-        transformStyle: 'preserve-3d'
+      style={{
+        transform: transformStyle,
+        transition: isHovered ? 'none' : 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)',
+        transformStyle: 'preserve-3d',
       }}
+      className={`w-full h-full relative select-none rounded-3xl ${className}`}
     >
-      {/* Ambient hover glowing backdrop shadow element */}
-      <div
-        className="absolute -inset-[1px] opacity-0 blur-2xl transition-opacity duration-500 rounded-none z-0 pointer-events-none group-hover:opacity-100"
-        style={{
-          background: `radial-gradient(circle at center, ${glowColor} 0%, transparent 75%)`,
-        }}
-      />
-
-      {/* Floating 3D structure card container */}
-      <motion.div
-        style={{
-          rotateX: isHovered ? rotateX : 0,
-          rotateY: isHovered ? rotateY : 0,
-          transformStyle: 'preserve-3d',
-        }}
-        animate={{
-          scale: isHovered ? 1.025 : 1,
-          z: isHovered ? 15 : 0
-        }}
-        transition={{ 
-          type: 'spring',
-          stiffness: 150,
-          damping: 20
-        }}
-        className="w-full h-full relative z-10 overflow-hidden"
+      {/* 3D Child Wrapper */}
+      <div 
+        style={{ transform: 'translateZ(25px)', transformStyle: 'preserve-3d' }}
+        className="w-full h-full relative z-10"
       >
-        {/* Cursor tracking spotlight glare layer */}
-        <div
-          className="absolute inset-0 pointer-events-none z-30 transition-opacity duration-300 opacity-0 group-hover:opacity-100 bg-[radial-gradient(circle_at_var(--mouse-x)_var(--mouse-y),rgba(255,255,255,0.07)_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_var(--mouse-x)_var(--mouse-y),rgba(255,255,255,0.05)_0%,transparent_50%)]"
-        />
+        {children}
+      </div>
 
-        {/* Glow border overlay reactively tracked on hover */}
+      {/* Shine overlay layer */}
+      {isHovered && (
         <div
-          className="absolute inset-0 pointer-events-none z-20 transition-opacity duration-300 opacity-0 group-hover:opacity-100 border border-sky-500/30 dark:border-sky-400/30"
+          style={{
+            background: `radial-gradient(circle at ${coords.shineX}% ${coords.shineY}%, rgba(255, 255, 255, 0.16) 0%, transparent 60%)`,
+            transform: 'translateZ(40px)',
+          }}
+          className="absolute inset-0 pointer-events-none z-20 rounded-3xl mix-blend-overlay"
         />
+      )}
 
-        {/* Inner high-resolution card frame */}
-        <div className="w-full h-full" style={{ transform: 'translateZ(1px)' }}>
-          {children}
-        </div>
-      </motion.div>
+      {/* Ambient Glow shadow layer */}
+      {isHovered && (
+        <div
+          style={{
+            background: `radial-gradient(circle at ${coords.shineX}% ${coords.shineY}%, ${glowColor} 0%, transparent 70%)`,
+            transform: 'translateZ(-15px)',
+            filter: 'blur(20px)',
+          }}
+          className="absolute -inset-3 pointer-events-none z-0 rounded-[2.5rem] opacity-75"
+        />
+      )}
     </div>
   );
 }

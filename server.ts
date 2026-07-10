@@ -76,6 +76,17 @@ function ensureLocalDataSetup() {
   if (!fs.existsSync(PROJECTS_FILE)) {
     const defaultProjects = [
       {
+        id: "proj_4",
+        title: "Blue Star Pest Control",
+        description: "An interactive web platform built for professional pest control services. Features a real-time service cost estimator, coverage maps, dynamic pest identification reference cards, and an automated booking inquiry pipeline.",
+        techStack: ["React", "Vite", "Tailwind CSS", "Framer Motion", "Lucide Icons"],
+        githubUrl: "https://github.com/madhavjha514/blue-star-pest-control",
+        liveUrl: "https://blue-star-pest-control.vercel.app",
+        category: "frontend",
+        featured: true,
+        date: new Date().toISOString()
+      },
+      {
         id: "proj_1",
         title: "CloudEngine Orchestrator",
         description: "An asynchronous distributed task orchestration engine. Handles background jobs, multi-stage retry queues, latency logging, and real-time visualization dashboards via WebSocket sync.",

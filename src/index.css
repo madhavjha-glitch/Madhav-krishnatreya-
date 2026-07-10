@@ -4,220 +4,39 @@
 @theme {
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
-  --color-accent: var(--color-accent-val);
-  --color-accent-sec: var(--color-accent-sec-val);
-}
-
-@variant dark (&:where(.dark, .dark *));
-
-:root {
-  --color-accent-val: #0ea5e9;
-  --color-accent-sec-val: #6366f1;
-  --color-accent-glow-val: rgba(14, 165, 233, 0.15);
 }
 
 html {
   scroll-behavior: smooth;
+  background-color: #050212;
 }
 
-/* Custom geometric background styles */
-[data-canvas="grid"] .bg-grid-pattern,
-[data-canvas="grid"] .bg-dot-pattern {
-  background-size: 40px 40px;
+/* Premium smooth mesh gradient style */
+.mesh-gradient-bg {
+  background-color: #050212;
   background-image: 
-    linear-gradient(to right, color-mix(in srgb, var(--color-accent-val) 5%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in srgb, var(--color-accent-val) 5%, transparent) 1px, transparent 1px);
+    radial-gradient(at 15% 15%, rgba(168, 85, 247, 0.22) 0px, transparent 60%),   /* Vibrant Amethyst Purple */
+    radial-gradient(at 85% 20%, rgba(236, 72, 153, 0.18) 0px, transparent 60%),    /* Royal Rose */
+    radial-gradient(at 50% 50%, rgba(99, 102, 241, 0.15) 0px, transparent 65%),    /* Soft Indigo */
+    radial-gradient(at 20% 80%, rgba(139, 92, 246, 0.2) 0px, transparent 60%),     /* Electric Purple */
+    radial-gradient(at 80% 80%, rgba(244, 63, 94, 0.18) 0px, transparent 60%);     /* Warm Rose Gold */
+  background-attachment: fixed;
 }
 
-[data-canvas="dots"] .bg-dot-pattern,
-[data-canvas="dots"] .bg-grid-pattern {
-  background-size: 24px 24px;
-  background-image: radial-gradient(color-mix(in srgb, var(--color-accent-val) 8%, transparent) 1px, transparent 1px);
-}
-
-[data-canvas="plain"] .bg-grid-pattern,
-[data-canvas="plain"] .bg-dot-pattern {
-  background-image: none !important;
-}
-
-/* Dynamic glow animations */
-@keyframes pulseGlow {
-  0%, 100% {
-    opacity: 0.3;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.6;
-    transform: scale(1.08);
-  }
-}
-
-.animate-pulse-glow {
-  animation: pulseGlow 15s infinite ease-in-out;
-}
-
-/* 4D Dynamic Mesh Orb Animations (Spatio-Temporal color grading) */
-@keyframes meshOrb1 {
-  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  33% { transform: translate(8%, 12%) scale(1.15) rotate(120deg); }
-  66% { transform: translate(-6%, 6%) scale(0.9) rotate(240deg); }
-  100% { transform: translate(0, 0) scale(1) rotate(360deg); }
-}
-@keyframes meshOrb2 {
-  0% { transform: translate(0, 0) scale(1) rotate(360deg); }
-  33% { transform: translate(-10%, -6%) scale(0.85) rotate(240deg); }
-  66% { transform: translate(6%, -12%) scale(1.1) rotate(120deg); }
-  100% { transform: translate(0, 0) scale(1) rotate(0deg); }
-}
-@keyframes meshOrb3 {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(12%, -8%) scale(1.2); }
-  100% { transform: translate(0, 0) scale(1); }
-}
-@keyframes meshOrb4 {
-  0% { transform: translate(0, 0) scale(1.05); }
-  50% { transform: translate(-8%, 8%) scale(0.95); }
-  100% { transform: translate(0, 0) scale(1.05); }
-}
-
-.animate-mesh-orb-1 { animation: meshOrb1 28s infinite ease-in-out; }
-.animate-mesh-orb-2 { animation: meshOrb2 32s infinite ease-in-out; }
-.animate-mesh-orb-3 { animation: meshOrb3 24s infinite ease-in-out; }
-.animate-mesh-orb-4 { animation: meshOrb4 26s infinite ease-in-out; }
-
-/* 4D Theme Global Esthetic Overrides & Color Grading */
-.theme-4d {
-  --scrollbar-track-bg: #030206;
-  --scrollbar-thumb-bg: #151221;
-}
-
-/* Make section backdrops transparent so that the background mesh is visible */
-.theme-4d section, .theme-4d main, .theme-4d #about, .theme-4d #skills, .theme-4d #projects, .theme-4d #experience, .theme-4d #education, .theme-4d #contact,
-.theme-midnight section, .theme-midnight main, .theme-midnight #about, .theme-midnight #skills, .theme-midnight #projects, .theme-midnight #experience, .theme-midnight #education, .theme-midnight #contact,
-.theme-sunset section, .theme-sunset main, .theme-sunset #about, .theme-sunset #skills, .theme-sunset #projects, .theme-sunset #experience, .theme-sunset #education, .theme-sunset #contact,
-.theme-pearlescent section, .theme-pearlescent main, .theme-pearlescent #about, .theme-pearlescent #skills, .theme-pearlescent #projects, .theme-pearlescent #experience, .theme-pearlescent #education, .theme-pearlescent #contact {
-  background-color: transparent !important;
-  background-image: none !important;
-}
-
-/* Glassmorphism upgrade for cards, layouts and containers under Theme-4D & Midnight & Sunset */
-.theme-4d .bg-white, .theme-4d .dark\:bg-slate-950, .theme-4d .bg-slate-50, .theme-4d .dark\:bg-slate-950\/80, .theme-4d .bg-white\/80, .theme-4d .bg-slate-900\/50, .theme-4d .bg-slate-900\/40, .theme-4d .dark\:bg-slate-900\/40, .theme-4d .bg-slate-950\/40, .theme-4d .bg-slate-950\/80,
-.theme-midnight .bg-white, .theme-midnight .dark\:bg-slate-950, .theme-midnight .bg-slate-50, .theme-midnight .dark\:bg-slate-950\/80, .theme-midnight .bg-white\/80, .theme-midnight .bg-slate-900\/50, .theme-midnight .bg-slate-900\/40, .theme-midnight .dark\:bg-slate-900\/40, .theme-midnight .bg-slate-950\/40, .theme-midnight .bg-slate-950\/80,
-.theme-sunset .bg-white, .theme-sunset .dark\:bg-slate-950, .theme-sunset .bg-slate-50, .theme-sunset .dark\:bg-slate-950\/80, .theme-sunset .bg-white\/80, .theme-sunset .bg-slate-900\/50, .theme-sunset .bg-slate-900\/40, .theme-sunset .dark\:bg-slate-900\/40, .theme-sunset .bg-slate-950\/40, .theme-sunset .bg-slate-950\/80 {
-  background-color: rgba(10, 8, 20, 0.45) !important;
-  backdrop-filter: blur(24px) saturate(190%) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 
-    0 4px 30px rgba(0, 0, 0, 0.4),
-    inset 0 1px 1px rgba(255, 255, 255, 0.05) !important;
-}
-
-/* Glassmorphism upgrade for Pearlescent Light Mode */
-.theme-pearlescent .bg-white,
-.theme-pearlescent .dark\:bg-slate-950,
-.theme-pearlescent .bg-slate-50,
-.theme-pearlescent .dark\:bg-slate-950\/80,
-.theme-pearlescent .bg-white\/80,
-.theme-pearlescent .bg-slate-900\/50,
-.theme-pearlescent .bg-slate-900\/40,
-.theme-pearlescent .dark\:bg-slate-900\/40,
-.theme-pearlescent .bg-slate-950\/40,
-.theme-pearlescent .bg-slate-950\/80 {
-  background-color: rgba(255, 255, 255, 0.45) !important;
-  backdrop-filter: blur(24px) saturate(160%) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(160%) !important;
-  border-color: rgba(0, 0, 0, 0.05) !important;
-  box-shadow: 
-    0 4px 30px rgba(0, 0, 0, 0.04),
-    inset 0 1px 1px rgba(255, 255, 255, 0.6) !important;
-}
-
-/* Make text tags extra high contrast and glowing under interactive dark themes */
-.theme-4d h1, .theme-4d h2, .theme-4d h3,
-.theme-midnight h1, .theme-midnight h2, .theme-midnight h3,
-.theme-sunset h1, .theme-sunset h2, .theme-sunset h3 {
-  text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
-}
-
-/* Custom interactive input styling under dark interactive themes */
-.theme-4d input, .theme-4d textarea, .theme-4d select,
-.theme-midnight input, .theme-midnight textarea, .theme-midnight select,
-.theme-sunset input, .theme-sunset textarea, .theme-sunset select {
-  background-color: rgba(5, 4, 10, 0.6) !important;
-  border-color: rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(8px) !important;
-}
-.theme-4d input:focus, .theme-4d textarea:focus,
-.theme-midnight input:focus, .theme-midnight textarea:focus,
-.theme-sunset input:focus, .theme-sunset textarea:focus {
-  border-color: var(--color-accent-val) !important;
-  box-shadow: 0 0 15px color-mix(in srgb, var(--color-accent-val) 25%, transparent) !important;
-}
-
-/* Pearlescent Light Mode Inputs */
-.theme-pearlescent input,
-.theme-pearlescent textarea,
-.theme-pearlescent select {
-  background-color: rgba(255, 255, 255, 0.8) !important;
-  border-color: rgba(0, 0, 0, 0.1) !important;
-  backdrop-filter: blur(8px) !important;
-}
-.theme-pearlescent input:focus,
-.theme-pearlescent textarea:focus {
-  border-color: var(--color-accent-val) !important;
-  box-shadow: 0 0 15px color-mix(in srgb, var(--color-accent-val) 15%, transparent) !important;
-}
-
-/* Sleek glass active elements */
-.theme-4d .border-slate-200, .theme-4d .dark\:border-slate-800, .theme-4d .border-slate-100, .theme-4d .dark\:border-slate-800\/60,
-.theme-midnight .border-slate-200, .theme-midnight .dark\:border-slate-800, .theme-midnight .border-slate-100, .theme-midnight .dark\:border-slate-800\/60,
-.theme-sunset .border-slate-200, .theme-sunset .dark\:border-slate-800, .theme-sunset .border-slate-100, .theme-sunset .dark\:border-slate-800\/60,
-.theme-pearlescent .border-slate-200, .theme-pearlescent .dark\:border-slate-800, .theme-pearlescent .border-slate-100, .theme-pearlescent .dark\:border-slate-800\/60 {
-  border-color: rgba(255, 255, 255, 0.06) !important;
-}
-
-/* Dynamic border lighting for 3D Cards on hover */
-.theme-4d .group:hover .border-sky-500\/30, .theme-4d .group:hover .dark\:border-sky-400\/30, .theme-4d .group:hover .border-emerald-500\/30,
-.theme-midnight .group:hover .border-sky-500\/30, .theme-midnight .group:hover .dark\:border-sky-400\/30, .theme-midnight .group:hover .border-emerald-500\/30,
-.theme-sunset .group:hover .border-sky-500\/30, .theme-sunset .group:hover .dark\:border-sky-400\/30, .theme-sunset .group:hover .border-emerald-500\/30,
-.theme-pearlescent .group:hover .border-sky-500\/30, .theme-pearlescent .group:hover .dark\:border-sky-400\/30, .theme-pearlescent .group:hover .border-emerald-500\/30 {
-  border-color: color-mix(in srgb, var(--color-accent-val) 45%, transparent) !important;
-  box-shadow: 0 0 25px color-mix(in srgb, var(--color-accent-val) 20%, transparent) !important;
-}
-
-/* Subtle glowing accent buttons */
-.theme-4d .bg-sky-50, .theme-4d .dark\:bg-sky-950\/20, .theme-4d .bg-emerald-50, .theme-4d .dark\:bg-emerald-950\/20,
-.theme-midnight .bg-sky-50, .theme-midnight .dark\:bg-sky-950\/20, .theme-midnight .bg-emerald-50, .theme-midnight .dark\:bg-emerald-950\/20,
-.theme-sunset .bg-sky-50, .theme-sunset .dark\:bg-sky-950\/20, .theme-sunset .bg-emerald-50, .theme-sunset .dark\:bg-emerald-950\/20,
-.theme-pearlescent .bg-sky-50, .theme-pearlescent .dark\:bg-sky-950\/20, .theme-pearlescent .bg-emerald-50, .theme-pearlescent .dark\:bg-emerald-950\/20 {
-  background-color: color-mix(in srgb, var(--color-accent-val) 12%, transparent) !important;
-  color: var(--color-accent-val) !important;
-  border-color: color-mix(in srgb, var(--color-accent-val) 30%, transparent) !important;
-}
-.theme-4d .bg-sky-50:hover, .theme-4d .dark\:bg-sky-950\/20:hover, .theme-4d .bg-emerald-50:hover, .theme-4d .dark\:bg-emerald-950\/20:hover,
-.theme-midnight .bg-sky-50:hover, .theme-midnight .dark\:bg-sky-950\/20:hover, .theme-midnight .bg-emerald-50:hover, .theme-midnight .dark\:bg-emerald-950\/20:hover,
-.theme-sunset .bg-sky-50:hover, .theme-sunset .dark\:bg-sky-950\/20:hover, .theme-sunset .bg-emerald-50:hover, .theme-sunset .dark\:bg-emerald-950\/20:hover,
-.theme-pearlescent .bg-sky-50:hover, .theme-pearlescent .dark\:bg-sky-950\/20:hover, .theme-pearlescent .bg-emerald-50:hover, .theme-pearlescent .dark\:bg-emerald-950\/20:hover {
-  background-color: var(--color-accent-val) !important;
-  color: #030206 !important;
-}
-
-/* Custom modern scrollbar for dark theme */
+/* Custom scrollbar for dark theme */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--scrollbar-track-bg, #020617);
+  background: #020617;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb-bg, #1e293b);
-  border: 2px solid var(--scrollbar-track-bg, #020617);
+  background: #1e293b;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-accent-val);
+  background: #0ea5e9;
 }
 
 @keyframes blink {
