@@ -10,9 +10,12 @@ import Experience from './components/Experience';
 import Education from './components/Education';
 import ContactForm from './components/ContactForm';
 import ThreeDBackground from './components/ThreeDBackground';
+import CustomCursor from './components/CustomCursor';
+import OpeningIntro from './components/OpeningIntro';
 
 export default function App() {
   const [currentView, setCurrentView] = useState<string>('home');
+  const [showOpening, setShowOpening] = useState<boolean>(true);
 
   const getThemeClass = () => {
     return 'mesh-gradient-bg text-slate-100';
@@ -33,6 +36,12 @@ export default function App() {
 
   return (
     <div className={`min-h-screen flex flex-col antialiased font-sans transition-colors duration-300 relative overflow-hidden ${getThemeClass()}`}>
+      {/* Immersive Preloader & Launch Portal */}
+      {showOpening && <OpeningIntro onComplete={() => setShowOpening(false)} />}
+
+      {/* Premium Dynamic Interactive Cursor & Trail */}
+      <CustomCursor />
+
       {/* Immersive Interactive 3D Background */}
       <ThreeDBackground />
 

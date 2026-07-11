@@ -184,7 +184,7 @@ export default function Projects() {
                   className="w-full h-full"
                 >
                     <ThreeDCard className="w-full h-full">
-                      <div className="bg-slate-900 border border-slate-850 rounded-3xl p-6 md:p-8 flex flex-col justify-between h-full hover:border-slate-800 transition-colors duration-300 shadow-md">
+                      <div className="project-card-interactive bg-slate-900 border border-slate-850 rounded-3xl p-6 md:p-8 flex flex-col justify-between h-full hover:border-slate-800 transition-colors duration-300 shadow-md">
                         
                         <div>
                           {/* Card Category tag + Feature star */}
