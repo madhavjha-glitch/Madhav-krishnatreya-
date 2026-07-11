@@ -4,7 +4,6 @@ import ThreeDCard from './ThreeDCard';
 
 export default function About() {
   const personalInfo = [
-    { label: "Father's Name", value: "Mohan Jha", icon: User },
     { label: "Date of Birth", value: "12 July 2006", icon: Calendar },
     { label: "Languages Known", value: "Hindi, English (Fluent)", icon: Languages },
     { label: "Gender", value: "Male", icon: User },
